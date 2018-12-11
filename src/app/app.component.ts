@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import * as firebase from 'firebase';
-import { environment} from '../environments/environment';
+// @ts-ignore
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
