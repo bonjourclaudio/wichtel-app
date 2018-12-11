@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import * as firebase from 'firebase';
+import { environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'wichteln-app';
+
+  config = environment.config;
+
+  constructor() {
+
+    firebase.initializeApp(this.config);
+
+  }
 }

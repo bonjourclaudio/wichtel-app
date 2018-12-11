@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+.pointer {
+  cursor: pointer;
+}
+
+.grow {
+  transition: all .2s ease-in-out;
+}
+
+.smallerGrow {
+  transition: all .2s ease-in-out;
+
+}
+
+.smallerGrow:hover {
+  transform: scale(1.01);
+}
+
+.grow:hover { transform: scale(1.1); }
+
+.big {
+  font-size: 50%;
+}
+
+.unstyled-list {
+  list-style-type: none;
+}

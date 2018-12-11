@@ -1,0 +1,147 @@
+<div class="text-center center">
+
+  <h1 class="title">Let's create a new <span class="text-info">Wichtelgruppe!</span></h1>
+
+  <br/>
+  <br/>
+
+  <button class="btn btn-outline" (click)="open=true">Create</button>
+</div>
+<clr-wizard #wizard [(clrWizardOpen)]="open">
+  <clr-wizard-title>Create new <span class="text-info">Wichtelgruppe</span></clr-wizard-title>
+
+  <clr-wizard-button [type]="'cancel'" (click)="finish()">Close and Reset</clr-wizard-button>
+  <clr-wizard-button [type]="'previous'">Previous</clr-wizard-button>
+  <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="name.pristine || !formPageOne.valid">
+    <ng-template clrPageTitle>Name and price limit</ng-template>
+    <form #formPageOne="ngForm">
+      <section class="form-block">
+        <label>Enter a group name and price limit</label>
+        <div class="form-group">
+          <label>Name</label>
+          <label for="nameInput" aria-haspopup="true" role="tooltip"
+                 [class.invalid]="name.touched && !name.valid"
+                 class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+            <input type="text" id="nameInput" required [(ngModel)]="model.name" name="name" #name="ngModel">
+            <span class="tooltip-content">This field cannot be empty!</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Price Limit (CHF)</label>
+          <label for="priceLimitInput" aria-haspopup="true" role="tooltip"
+                 [class.invalid]="priceLimit.touched && !priceLimit.valid"
+                 class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+            <input type="number" id="priceLimitInput" required [(ngModel)]="model.priceLimit" name="priceLimit"
+                   #priceLimit="ngModel">
+
+            <span class="tooltip-content">This field cannot be empty!</span>
+          </label>
+        </div>
+      </section>
+    </form>
+  </clr-wizard-page>
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="members.pristine || !formPageTwo.valid">
+    <ng-template clrPageTitle>Wichtelgruppe members</ng-template> <!-- mandatory -->
+    <ng-template clrPageNavTitle>
+      Members
+    </ng-template>
+    <form #formPageTwo="ngForm">
+      <section class="form-block">
+        <div class="form-group">
+          <label>Add new member</label>
+          <label for="numberInput" aria-haspopup="true" role="tooltip"
+                 [class.invalid]="members.touched && !members.valid"
+                 class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+            <input type="text" id="numberInput" name="number" #members="ngModel" [(ngModel)]="memberName"
+                   (keyup.enter)="addMember()"/>
+            <clr-control-helper>Add yourself as well!</clr-control-helper>
+
+            <span class="tooltip-content">
+                            This field cannot be empty!
+                        </span>
+          </label>
+
+          <button (click)="addMember()" type="button" class="btn btn-icon btn-success">
+            <clr-icon shape="plus"></clr-icon>
+          </button>
+
+        </div>
+      </section>
+    </form>
+
+    <hr>
+
+    <ul>
+      <li *ngFor="let member of model.members; let i = index" class="unstyled-list">$ {{member}}
+        <clr-icon (click)="removeMember(i)" class="text-danger grow pointer" shape="trash"></clr-icon>
+      </li>
+    </ul>
+
+  </clr-wizard-page>
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="!formPageOne.valid || !formPageTwo.valid">
+
+    <div *ngIf="showSuccessModal" class="alert alert-success success-modal" role="alert">
+      <div class="alert-items">
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+            <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+          </div>
+          <span class="alert-text"><h3>Successfully created new group!</h3><br/><h5>You will get redirected to your group in 3 seconds...</h5></span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showError" class="alert alert-danger" role="alert">
+      <div class="alert-items">
+        <div class="alert-item static">
+          <div class="alert-icon-wrapper">
+            <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+          </div>
+          <h4>Please add one new member. Can't create a group with and odd number of members!</h4>
+        </div>
+      </div>
+    </div>
+
+    <ng-template clrPageTitle>Confirm your Wichtelgruppe</ng-template> <!-- mandatory -->
+    <ng-template clrPageNavTitle>
+            <span *ngIf="formPageOne.valid && formPageTwo.valid">
+                Ready to go!
+            </span>
+      <span *ngIf="!formPageOne.valid || !formPageTwo.valid">
+                Not ready yet
+            </span>
+    </ng-template>
+
+    <div *ngIf="formPageOne.valid && formPageTwo.valid">
+      <form class="compact">
+        <label>Your information</label>
+        <section class="form-block">
+          <div class="form-group">
+            <label>Group name:</label>
+            <span>{{ this.model.name }}</span>
+          </div>
+          <div class="form-group">
+            <label>Price limit:</label>
+            <span>CHF {{ this.model.priceLimit }}</span>
+          </div>
+          <div class="form-group">
+            <label>Members:</label>
+            <span *ngFor="let member of model.members">{{ member | uppercase}},</span>
+          </div>
+        </section>
+      </form>
+    </div>
+
+    <button *ngIf="!groupCreated" class="btn" (click)="createWichtelgruppe()">Create Group</button>
+
+    <div *ngIf="!formPageOne.valid || !formPageTwo.valid">
+      <p>Not quite there yet.</p>
+    </div>
+
+
+  </clr-wizard-page>
+</clr-wizard>

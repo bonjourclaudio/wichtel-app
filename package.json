@@ -20,7 +20,13 @@
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
+    "@clr/angular": "^1.0.0",
+    "@clr/icons": "^1.0.0",
+    "@clr/ui": "^1.0.0",
+    "@webcomponents/custom-elements": "^1.0.0",
+    "angular-firebase": "^1.1.5",
     "core-js": "^2.5.4",
+    "ngx-clipboard": "^11.1.9",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },

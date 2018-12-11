@@ -1,0 +1,18 @@
+.copyIcon {
+  margin-left: 10px;
+}
+
+.member-container {
+  width: 40vw;
+}
+
+.memberCard {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+
+  .member-container {
+    width: 100%;
+  }
+}
