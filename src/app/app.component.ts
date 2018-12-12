@@ -74,7 +74,8 @@ export class AppComponent {
     this.searchResultMsg = 'no results...';
 
 
-    this.groupsResult = [];
+    this.groupsResult.length = 0;
+
 
     for (let i = 0; i < this.groups.length; i++) {
 

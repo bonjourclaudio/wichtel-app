@@ -43,15 +43,15 @@
           <button aria-label="Close" class="close" type="button" (click)="searching=false">
             <clr-icon aria-hidden="true" shape="close"></clr-icon>
           </button>
-          <h3 class="modal-title">Search for your <span class="text-info">Wichtelgruppe</span></h3>
+          <h3 class="modal-title">Search for a <span class="text-info">Wichtelgruppe</span></h3>
         </div>
         <div class="modal-body">
 
-          <p>Search for your a group name or the ID of your group:</p>
+          <p>Enter the group name or the ID of your group:</p>
 
 
           <div class="searchInput inline">
-            <input clrInput placeholder="Search..." name="input" [(ngModel)]="searchValue"/>
+            <input clrInput placeholder="Search..." name="input" [(ngModel)]="searchValue" (keyup.enter)="search()"/>
             <button class="btn btn-link" (click)="search()">
               <clr-icon shape="search"></clr-icon>
             </button>
