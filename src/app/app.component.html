@@ -10,16 +10,19 @@
 
     <div class="header-nav">
       <a class="nav-link nav-icon" routerLink="home" routerLinkActive="active">
-       <clr-icon shape="home"></clr-icon>
+        <clr-icon shape="home"></clr-icon>
       </a>
       <a class="nav-link nav-icon" routerLink="create" routerLinkActive="active">
         <clr-icon shape="wrench"></clr-icon>
       </a>
-    </div>                                                                  
+      <a (click)="openSearchDialog()" class="nav-link nav-icon searchIcon">
+        <clr-icon shape="search"></clr-icon>
+      </a>
+    </div>
 
     <div class="header-actions">
       <a class="nav-link nav-icon" routerLink="about" routerLinkActive="active">
-       <clr-icon shape="info-standard"></clr-icon>
+        <clr-icon shape="info-standard"></clr-icon>
       </a>
     </div>
   </clr-header>
@@ -31,3 +34,53 @@
     </main>
   </div>
 </clr-main-container>
+
+<div *ngIf="searching">
+  <div class="modal">
+    <div class="modal-dialog modal-xl" role="dialog" aria-hidden="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button aria-label="Close" class="close" type="button" (click)="searching=false">
+            <clr-icon aria-hidden="true" shape="close"></clr-icon>
+          </button>
+          <h3 class="modal-title">Search for your <span class="text-info">Wichtelgruppe</span></h3>
+        </div>
+        <div class="modal-body">
+
+          <p>Search for your a group name or the ID of your group:</p>
+
+
+          <div class="searchInput inline">
+            <input clrInput placeholder="Search..." name="input" [(ngModel)]="searchValue"/>
+            <button class="btn btn-link" (click)="search()">
+              <clr-icon shape="search"></clr-icon>
+            </button>
+          </div>
+
+          <br/>
+          <br/>
+
+          <p>{{searchResultMsg}}</p>
+
+          <div class="card" *ngFor="let group of groupsResult">
+            <div class="card-header">
+              {{group.name}}
+            </div>
+            <div class="card-block">
+              <div class="card-text">
+                Members: {{group.members.length}}
+              </div>
+            </div>
+            <div class="card-footer">
+              <button (click)="searching=false" class="btn btn-sm btn-link" routerLink="/wichteln/{{group.id}}">Open
+                Group
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop" aria-hidden="true"></div>
+</div>
